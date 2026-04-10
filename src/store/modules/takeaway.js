@@ -28,7 +28,7 @@ const foodStore = createSlice({
             if(item){
                 item.count++
             }else {
-                state.cartList.push(action.payload)
+                state.cartList.push({...action.payload, count: 1})
             }
         }
     }
