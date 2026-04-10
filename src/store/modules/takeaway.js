@@ -30,6 +30,19 @@ const foodStore = createSlice({
             }else {
                 state.cartList.push({...action.payload, count: 1})
             }
+        },
+        // 购物车数量加减 reducer
+        increCount(state, action) {
+            const item = state.cartList.find(item => item.id === action.payload)
+            item.count++
+        },
+        // 购物车数量减 reducer
+        decreCount(state, action) {
+            const item = state.cartList.find(item => item.id === action.payload)
+            item.count > 0 && item.count--
+        },
+        clearCart(state) {
+            state.cartList = []
         }
     }
 })
@@ -40,8 +53,10 @@ const foodStore = createSlice({
  * - setFoodsList: 用于更新食品列表数据
  * - setActiveIndex: 用于更新当前激活项的索引
  * - addCart: 用于添加购物车
+ * - increCount: 用于购物车数量加
+ * - decreCount: 用于购物车数量减
  */
-const { setFoodsList, setActiveIndex, addCart } = foodStore.actions
+const { setFoodsList, setActiveIndex, addCart, increCount, decreCount, clearCart } = foodStore.actions
 
 // 定义一个异步 action 创建函数（Thunk），用于处理异步逻辑
 const fetchFoodsList = () => {
@@ -54,7 +69,7 @@ const fetchFoodsList = () => {
 }
 
 // 导出异步获取食品列表的 thunk action creator
-export { fetchFoodsList, setActiveIndex, addCart }
+export { fetchFoodsList, setActiveIndex, addCart, increCount, decreCount, clearCart }
 // 导出 foodStore 的 reducer，用于配置 store
 const reducer = foodStore.reducer
 export default reducer
